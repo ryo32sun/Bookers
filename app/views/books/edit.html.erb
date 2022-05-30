@@ -1,0 +1,26 @@
+<body>
+    <h1 class="headline">Editing Book</h1>
+    <% if @book.errors.any? %>
+    <div class="error-box">
+      <h4 class="error"><%= pluralize(@book.errors.count, "error") %>  prohibited this book from being saved:</h4>
+      <ul>
+        <% @book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+<%= form_with model: @book do |f| %>
+    <h4 class="text">Title</h4>
+    <%= f.text_field :title %>
+    <h4 class="text">Body</h4>
+    <%= f.text_area :body %>
+    <br>
+    <%= f.submit 'Update Book' %>
+<% end %>
+
+<%= link_to 'Show', book_path(@book.id) %>
+<span>|</span>
+<%= link_to 'Back', books_path %>
+
+</body>

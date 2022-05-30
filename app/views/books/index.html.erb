@@ -1,0 +1,65 @@
+<p class="flash"><%= flash[:notice] %></p>
+
+<h1><strong>Books</strong></h1>
+
+<!--<div class="index">-->
+<!--    <p class="index-title"><strong>Title</strong></p>-->
+<!--    <p class="index-body"><strong>Body</strong></p>-->
+<!--</div>-->
+
+<!--<%= @books.each do |book| %>-->
+<!--    <div class="index-text">-->
+<!--        <span><%= book.title %></span>-->
+<!--        <span><%= book.body %></span>-->
+<!--        <p>Show</p>-->
+<!--        <p>Edit</p>-->
+<!--        <p>Destroy</p>-->
+        
+<!--    </div>-->
+<!--<% end %>-->
+
+<table>
+    <thead>
+        <tr>
+            <th class="table-title">Title</th>
+            <th class="table-body">Body</th>
+            <th class="table-link"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @books.each do |book| %>
+            <tr>
+                <td class="table-title"><%= book.title %></td>
+                <td class="table-body"><%= book.body %></td>
+                <td class="table-link">
+                    <div>
+                        <span><%= link_to 'Show', book_path(book.id) %></span>
+                        <span><%= link_to 'Edit', edit_book_path(book.id) %></span>
+                        <span><%= link_to 'Destroy', book_path(book.id), method: :delete, "data-confirm" => "Are you sure?" %></span>
+                    </div>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<h1><strong>New book</strong></h1>
+<% if @book.errors.any? %>
+    <div class="error-box">
+        <h5 class="error"><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h5>
+        <ul>
+            <% @book.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
+<%= form_with model: @book do |f| %>
+    <h4 class="text">Title</h4>
+    <%= f .text_field :title %>
+    <h4 class="text">Body</h4>
+    <%= f .text_area :body %>
+    <br>
+    <%= f .submit 'Create Book' %>
+<% end %>
